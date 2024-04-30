@@ -1,17 +1,21 @@
-import TodoItem from "./TodoItem";
+import React from 'react';
+import TodoItem from './TodoItem';
 
-const TodoList = ({ todos, setTodos }) => {
-    return (
-        <ol className="todo_list">
-            {todos && todos.length > 0 ? (
-                todos?.map((item, index) => (
-                <TodoItem key={index} item={item} todos={todos} setTodos={setTodos} />
-            ))
-            ) : (
-                <p>Seems lonely in here, what are you up to?</p>
-            )}
-        </ol>
-    );
+const TodoList = ({ todos, onEditTodo, onDeleteTodo, onToggleComplete }) => {
+  return (
+    <ul>
+      {todos.map((todo, index) => (
+        <TodoItem
+          key={index}
+          index={index}
+          todo={todo}
+          onEditTodo={onEditTodo}
+          onDeleteTodo={onDeleteTodo}
+          onToggleComplete={onToggleComplete} // Make sure this is included
+        />
+      ))}
+    </ul>
+  );
 }
 
 export default TodoList;

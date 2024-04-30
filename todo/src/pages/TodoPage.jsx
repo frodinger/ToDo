@@ -1,30 +1,70 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import Form from "../components/Form";
-import Hero from "../components/Hero";
-import TodoList from "../components/TodoList";
+import React, { useState, useEffect } from 'react';
+import TodoList from '../components/TodoList';
+import Form from '../components/Form';
 
 const TodoPage = () => {
+    const [todos, setTodos] = useState([]);
 
-  const [todos, setTodos] = useState([]);
-
-  // Hämta data från local storage
+  // Load todos from local storage on initial render
   useEffect(() => {
-    const storedTodos = localStorage.getItem("todos");
+    const storedTodos = JSON.parse(localStorage.getItem('todos'));
     if (storedTodos) {
-      // Konvertera string tillbaka till en array
-      setTodos(JSON.parse(storedTodos));
+      setTodos(storedTodos);
     }
   }, []);
 
-  const todos_completed = todos.filter((todo) => todo.completed === true).length;
-  const total_todos = todos.length;
+  // Update local storage whenever todos change
+  useEffect(() => {
+    try {
+      const storedTodos = JSON.parse(localStorage.getItem('todos'));
+      console.log("Stored todos:", storedTodos); // Debugging
+      if (storedTodos && Array.isArray(storedTodos)) {
+        setTodos(storedTodos);
+      }
+    } catch (error) {
+      console.error("Error loading todos from local storage:", error);
+    }
+  }, []);
+  const handleAddTodo = (newTodo) => {
+    const newTodos = [...todos, { text: newTodo, completed: false }];
+    setTodos(newTodos);
+    localStorage.setItem('todos', JSON.stringify(newTodos)); // Update local storage
+  };
+
+  const handleEditTodo = (index, updatedText) => {
+    const updatedTodos = [...todos];
+    updatedTodos[index].text = updatedText;
+    setTodos(updatedTodos);
+  };
+
+  const handleDeleteTodo = (index) => {
+    const updatedTodos = [...todos];
+    updatedTodos.splice(index, 1);
+    setTodos(updatedTodos);
+    localStorage.setItem('todos', JSON.stringify(updatedTodos)); // Update local storage
+  };
+
+  const handleToggleComplete = (index, completed) => {
+    const updatedTodos = [...todos];
+    updatedTodos[index].completed = completed;
+    setTodos(updatedTodos);
+    localStorage.setItem('todos', JSON.stringify(updatedTodos)); // Update local storage
+  };
+
+  const allCompleted = todos.length > 0 && todos.every(todo => todo.completed);
 
   return (
-    <div className="wrapper">
-      <Form todos={todos} setTodos={setTodos} />
-      <Hero todos_completed={todos_completed} total_todos={total_todos} />
-      <TodoList todos={todos} setTodos={setTodos} />
+    <div>
+      <h1>Todo App</h1>
+      <p>{allCompleted ? 'Hurra!' : `${todos.filter(todo => todo.completed).length} out of ${todos.length} todos completed`}</p>
+      <Form onAddTodo={handleAddTodo} />
+      <TodoList
+        todos={todos}
+        onEditTodo={handleEditTodo}
+        onDeleteTodo={handleDeleteTodo}
+        onToggleComplete={handleToggleComplete}
+      />
+      {todos.length === 0 && <p>No todos yet!</p>}
     </div>
   );
 }
