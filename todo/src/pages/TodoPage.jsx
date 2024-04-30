@@ -17,13 +17,13 @@ const TodoPage = () => {
     }
   }, []);
 
-  const todos_completed = todos.filter((todo) => todo.is_completed === true).length;
+  const todos_completed = todos.filter((todo) => todo.completed === true).length;
   const total_todos = todos.length;
 
   return (
     <div className="wrapper">
-      <Hero todos_completed={todos_completed} total_todos={total_todos} />
       <Form todos={todos} setTodos={setTodos} />
+      <Hero todos_completed={todos_completed} total_todos={total_todos} />
       <TodoList todos={todos} setTodos={setTodos} />
     </div>
   );

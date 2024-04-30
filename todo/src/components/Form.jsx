@@ -6,9 +6,9 @@ const Form = ({ todos, setTodos }) => {
     event.preventDefault();
     const value = event.target.todo.value;
     const newTodo = {
-      title: value, 
+      name: value, 
       id: `todo-${nanoid()}`, 
-      is_completed: false
+      completed: false
     };
     // Uppdatera todo-state
     setTodos((prevTodos) => [...prevTodos, newTodo]);
@@ -20,15 +20,18 @@ const Form = ({ todos, setTodos }) => {
 
   return (
     <form className="form" onSubmit={handleSubmit}>
-      <label htmlFor="todo">
-        <input
-          type="text"
-          name="todo"
-          id="todo"
-          placeholder="Write your next task"
-        />
-      </label>
-      <button>Submit</button>
+        <h2 className="label-wrapper">
+            What needs to be done?
+        </h2>
+        <label htmlFor="todo">
+            <input
+            type="text"
+            name="todo"
+            id="todo"
+            placeholder="Write your next task"
+            />
+        </label>
+        <button>Add</button>
     </form>
   );
 }

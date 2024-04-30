@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const Item = ({ item, todos, setTodos }) => {
+const TodoItem = ({ item, todos, setTodos }) => {
 
-  const [editing, setEditing] = useState(false);
+  const [isEditing, setEditing] = useState(false);
   const inputRef = useRef(null);
 
   const completeTodo = () => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
-        todo.id === item.id ? { ...todo, is_completed: !todo.is_completed } : todo
+        todo.id === item.id ? { ...todo, completed: !todo.completed } : todo
       )
     );
     // Uppdatera local storage efter att klar-markerat en todo
@@ -21,7 +21,7 @@ const Item = ({ item, todos, setTodos }) => {
   }
 
   useEffect(() => {
-    if (editing && inputRef.current) {
+    if (isEditing && inputRef.current) {
       inputRef.current.focus();
       // placerar muspekaren vid slutet av texten
       inputRef.current.setSelectionRange(
@@ -29,7 +29,7 @@ const Item = ({ item, todos, setTodos }) => {
         inputRef.current.value.length
       );
     }
-  }, [editing]);
+  }, [isEditing]);
 
   const handleInputSubmit = (event) => {
     event.preventDefault();
@@ -53,7 +53,7 @@ const Item = ({ item, todos, setTodos }) => {
   const handleInputChange = (event) => {
     setTodos((prevTodos) => 
       prevTodos.map((todo) =>
-        todo.id === item.id ? {...todo, title: event.target.value} : todo
+        todo.id === item.id ? {...todo, name: event.target.value} : todo
       )
     );
   };
@@ -70,7 +70,7 @@ const Item = ({ item, todos, setTodos }) => {
 
   return (
     <li id={item?.id} className="todo_item">
-      {editing ? (
+      {isEditing ? (
         <form className="edit-form" onSubmit={handleInputSubmit}>
           <label htmlFor="edit-todo">
             <input
@@ -78,7 +78,7 @@ const Item = ({ item, todos, setTodos }) => {
               type="text"
               name="edit-todo"
               id="edit-todo"
-              defaultValue={item?.title}
+              defaultValue={item?.name}
               onBlur={handleInputBlur}
               onChange={handleInputChange}
             />
@@ -87,11 +87,11 @@ const Item = ({ item, todos, setTodos }) => {
         ) : (
             <>
               <button className="todo_items_left" onClick={completeTodo}>
-                <svg fill={item.is_completed ? "#22C55E" : "#0d0d0d"}>
+                <svg fill={item.completed ? "#22C55E" : "#0d0d0d"}>
                   <circle cx="11.998" cy="11.998" fillRule="nonzero" r="9.998" />
                 </svg>
-                <p style={item.is_completed ? { textDecoration: "line-through" } : {}}>
-                  {item?.title}
+                <p style={item.completed ? { textDecoration: "line-through" } : {}}>
+                  {item?.name}
                 </p>
               </button>
               <div className="todo_items_right">
@@ -104,4 +104,4 @@ const Item = ({ item, todos, setTodos }) => {
       );
 }
 
-export default Item;
+export default TodoItem;
