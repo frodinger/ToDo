@@ -55,16 +55,16 @@ const TodoPage = () => {
 
   return (
     <div>
-      <h1>Todo App</h1>
-      <p>{allCompleted ? 'All tasks completed, good job!' : `${todos.filter(todo => todo.completed).length} out of ${todos.length} tasks completed`}</p>
+      <h1>What needs to be done?</h1>
       <Form onAddTodo={handleAddTodo} />
       <TodoList
         todos={todos}
         onEditTodo={handleEditTodo}
         onDeleteTodo={handleDeleteTodo}
         onToggleComplete={handleToggleComplete}
-      />
+        />
       {todos.length === 0 && <p>No todos yet!</p>}
+      <p>{allCompleted ? 'All tasks completed, good job!' : `${todos.filter(todo => todo.completed).length} out of ${todos.length} tasks completed`}</p>
     </div>
   );
 }
