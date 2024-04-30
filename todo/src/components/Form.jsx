@@ -1,39 +1,31 @@
-import { nanoid } from "nanoid";
+import React, { useState } from 'react';
 
-const Form = ({ todos, setTodos }) => {
+const Form = ({ onAddTodo }) => {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleChange = (event) => {
+    setInputValue(event.target.value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const value = event.target.todo.value;
-    const newTodo = {
-      name: value, 
-      id: `todo-${nanoid()}`, 
-      completed: false
-    };
-    // Uppdatera todo-state
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
-    // Lagra uppdateard todo i local storage
-    const updatedToDoList = JSON.stringify([...todos, newTodo]);
-    localStorage.setItem("todos", updatedToDoList);
-    event.target.reset();
+    if (inputValue.trim() !== '') {
+      onAddTodo(inputValue);
+      setInputValue('');
+    }
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
-        <h2 className="label-wrapper">
-            What needs to be done?
-        </h2>
-        <label htmlFor="todo">
-            <input
-            type="text"
-            name="todo"
-            id="todo"
-            placeholder="Write your next task"
-            />
-        </label>
-        <button>Add</button>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleChange}
+        placeholder="Enter a todo"
+      />
+      <button type="submit">Add</button>
     </form>
   );
 }
-  
+
 export default Form;
