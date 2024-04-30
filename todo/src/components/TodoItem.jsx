@@ -22,17 +22,29 @@ const TodoItem = ({ index, todo, onEditTodo, onDeleteTodo, onToggleComplete }) =
     setEditText(todo.text);
   };
 
-  const handleToggleComplete = () => {
-    onToggleComplete(index, !todo.completed);
+  const handleClickName = () => {
+    // Toggle the completion status of the todo item
+    const updatedCompleted = !todo.completed;
+    onToggleComplete(index, updatedCompleted);
+    // Force re-render to update the checkbox
+    setIsEditing(!isEditing);
   };
 
   return (
     <li>
-      <input
-        type="checkbox"
-        checked={todo.completed}
-        onChange={handleToggleComplete}
-      />
+      <label>
+        <input
+          type="checkbox"
+          checked={todo.completed}
+          onChange={() => onToggleComplete(index, !todo.completed)}
+        />
+        <span
+          onClick={handleClickName}
+          style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer' }}
+        >
+          {todo.text}
+        </span>
+      </label>
       {isEditing ? (
         <>
           <input type="text" value={editText} onChange={handleChange} />
@@ -41,9 +53,6 @@ const TodoItem = ({ index, todo, onEditTodo, onDeleteTodo, onToggleComplete }) =
         </>
       ) : (
         <>
-          <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
-            {todo.text}
-          </span>
           <button onClick={handleEdit}>Edit</button>
           <button onClick={() => onDeleteTodo(index)}>Delete</button>
         </>
