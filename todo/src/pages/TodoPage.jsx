@@ -17,7 +17,6 @@ const TodoPage = () => {
   useEffect(() => {
     try {
       const storedTodos = JSON.parse(localStorage.getItem('todos'));
-      console.log("Stored todos:", storedTodos); // Debugging
       if (storedTodos && Array.isArray(storedTodos)) {
         setTodos(storedTodos);
       }
@@ -25,6 +24,7 @@ const TodoPage = () => {
       console.error("Error loading todos from local storage:", error);
     }
   }, []);
+
   const handleAddTodo = (newTodo) => {
     const newTodos = [...todos, { text: newTodo, completed: false }];
     setTodos(newTodos);

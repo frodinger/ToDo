@@ -11,7 +11,7 @@ const TodoList = ({ todos, onEditTodo, onDeleteTodo, onToggleComplete }) => {
           todo={todo}
           onEditTodo={onEditTodo}
           onDeleteTodo={onDeleteTodo}
-          onToggleComplete={onToggleComplete} // Make sure this is included
+          onToggleComplete={onToggleComplete}
         />
       ))}
     </ul>

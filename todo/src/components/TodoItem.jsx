@@ -31,30 +31,27 @@ const TodoItem = ({ index, todo, onEditTodo, onDeleteTodo, onToggleComplete }) =
   };
 
   return (
-    <li>
-      <label>
+    <li className="todo-item">
+      <div className="c-cb">
         <input
           type="checkbox"
           checked={todo.completed}
           onChange={() => onToggleComplete(index, !todo.completed)}
+          id={`checkbox-${index}`} // Unique id for each checkbox
+          className="c-cb__input" // Apply checkbox styling
         />
-        <span
-          onClick={handleClickName}
-          style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer' }}
-        >
-          {todo.text}
-        </span>
-      </label>
+        <label htmlFor={`checkbox-${index}`} className="c-cb__label" onClick={handleClickName}>{todo.text}</label>
+      </div>
       {isEditing ? (
         <>
-          <input type="text" value={editText} onChange={handleChange} />
-          <button onClick={handleSave}>Save</button>
-          <button onClick={handleCancel}>Cancel</button>
+          <input type="text" value={editText} onChange={handleChange} className="edit-input" /> {/* Apply input styling */}
+          <button onClick={handleSave} className="edit-button">Save</button> {/* Apply button styling */}
+          <button onClick={handleCancel} className="edit-button">Cancel</button> {/* Apply button styling */}
         </>
       ) : (
         <>
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={() => onDeleteTodo(index)}>Delete</button>
+          <button onClick={handleEdit} className="edit-button">Edit</button> {/* Apply button styling */}
+          <button onClick={() => onDeleteTodo(index)} className="edit-button">Delete</button> {/* Apply button styling */}
         </>
       )}
     </li>
