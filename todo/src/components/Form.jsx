@@ -23,7 +23,7 @@ const Form = ({ onAddTodo }) => {
         onChange={handleChange}
         placeholder="Enter a todo"
       />
-      <button type="submit">Add</button>
+      <button className='add-button' type="submit">Add</button>
     </form>
   );
 }

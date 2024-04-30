@@ -54,18 +54,18 @@ const TodoPage = () => {
   const allCompleted = todos.length > 0 && todos.every(todo => todo.completed);
 
   return (
-    <div>
+    <div className='todo-container'>
       <h1>What needs to be done?</h1>
       <Form onAddTodo={handleAddTodo} />
       <TodoList
-        todos={todos}
-        onEditTodo={handleEditTodo}
-        onDeleteTodo={handleDeleteTodo}
-        onToggleComplete={handleToggleComplete}
+          todos={todos}
+          onEditTodo={handleEditTodo}
+          onDeleteTodo={handleDeleteTodo}
+          onToggleComplete={handleToggleComplete}
         />
-      {todos.length > 0 && (
-            <p className='userMessage'>{allCompleted ? 'All tasks are completed, keep it up!' : `${todos.filter(todo => todo.completed).length} out of ${todos.length} tasks completed`}</p>
-        )}
+        {todos.length > 0 && (
+              <p className='userMessage'>{allCompleted ? 'All tasks are completed, keep it up!' : `${todos.filter(todo => todo.completed).length} out of ${todos.length} tasks completed`}</p>
+          )}
         {todos.length === 0 && <p className='userMessage'>No todos yet!</p>}
     </div>
   );

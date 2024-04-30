@@ -3,7 +3,7 @@ import TodoItem from './TodoItem';
 
 const TodoList = ({ todos, onEditTodo, onDeleteTodo, onToggleComplete }) => {
   return (
-    <ul>
+    <ul className='todo-ul'>
       {todos.map((todo, index) => (
         <TodoItem
           key={index}
