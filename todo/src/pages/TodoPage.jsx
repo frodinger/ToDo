@@ -56,7 +56,7 @@ const TodoPage = () => {
   return (
     <div>
       <h1>Todo App</h1>
-      <p>{allCompleted ? 'Hurra!' : `${todos.filter(todo => todo.completed).length} out of ${todos.length} todos completed`}</p>
+      <p>{allCompleted ? 'All tasks completed, good job!' : `${todos.filter(todo => todo.completed).length} out of ${todos.length} tasks completed`}</p>
       <Form onAddTodo={handleAddTodo} />
       <TodoList
         todos={todos}
